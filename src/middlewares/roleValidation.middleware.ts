@@ -7,7 +7,7 @@ const superAdminValidation = (
 ) => {
   const user = request.body.user;
 
-  if (user.role !== 1) {
+  if (user.roles.includes("SuperAdmin") === false) {
     return response.status(403).send("Access denied");
   }
 
@@ -21,7 +21,10 @@ const adminValidation = (
 ) => {
   const user = request.body.user;
 
-  if (user.role !== 2 && user.role !== 1) {
+  if (
+    user.roles.includes("Admin") === false &&
+    user.roles.includes("SuperAdmin") === false
+  ) {
     return response.status(403).send("Access denied");
   }
 
@@ -35,7 +38,11 @@ const userValidation = (
 ) => {
   const user = request.body.user;
 
-  if (user.role !== 3 && user.role !== 2 && user.role !== 1) {
+  if (
+    user.roles.includes("User") === false &&
+    user.roles.includes("Admin") === false &&
+    user.roles.includes("SuperAdmin") === false
+  ) {
     return response.status(403).send("Access denied");
   }
 

@@ -8,4 +8,10 @@ export const environment = {
   PORT: 3000,
   SALTROUNDS: 10,
   DEFAULT_PASSWORD: "1234",
+  MAPBOX_URL_GEOCODIGN: "https://api.mapbox.com/geocoding/v5/mapbox.places/",
+  MAPBOX_URL_TILEQUERY:
+    "https://api.mapbox.com/v4/mapbox.mapbox-streets-v8/tilequery/",
+  MAPBOX_LIMIT_FEATURES: 100,
+  MAPBOX_TOKEN:
+    "pk.eyJ1IjoieW1vbnRlc3YyNDEwOTEiLCJhIjoiY2x2aWozenVnMWFqdTJvbzFtem56ZmI4cyJ9.h3_f7YKzaoTjm_LmA6D2vQ",
 };
