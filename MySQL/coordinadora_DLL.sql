@@ -23,7 +23,7 @@ USE `reto_coordinadora`;
 -- Table `reto_coordinadora`.`users`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `reto_coordinadora`.`users` (
-    `idusers` VARCHAR(36) NOT NULL, `name` VARCHAR(45) NOT NULL, `lastName` VARCHAR(45) NULL, `email` VARCHAR(45) NOT NULL, `password` VARCHAR(45) NOT NULL, `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, `deleted_at` TIMESTAMP NULL, PRIMARY KEY (`idusers`), UNIQUE INDEX `email_UNIQUE` (`email` ASC)
+    `idusers` VARCHAR(36) NOT NULL, `name` VARCHAR(45) NOT NULL, `lastName` VARCHAR(45) NULL, `email` VARCHAR(45) NOT NULL, `password` VARCHAR(100) NOT NULL, `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, `deleted_at` TIMESTAMP NULL, PRIMARY KEY (`idusers`), UNIQUE INDEX `email_UNIQUE` (`email` ASC)
 ) ENGINE = InnoDB;
 
 -- -----------------------------------------------------

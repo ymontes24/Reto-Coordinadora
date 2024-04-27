@@ -3,4 +3,5 @@ import * as LoginController from "../../controllers/login.controllers/login.cont
 
 const router = express.Router();
 export const loginRoutes = router;
+
 router.post("/login", LoginController.loginUser);
