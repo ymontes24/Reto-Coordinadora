@@ -9,21 +9,21 @@ export const createUser = async (req: Request, res: Response) => {
 
   try {
     const [result]: any = await pool.execute(
-      `SELECT email FROM users WHERE email = '${email}'`
+      `SELECT email FROM users WHERE email = ?`,
+      [email]
     );
 
     if (Array.isArray(result) && result.length > 0) {
       return res.status(400).send("User already exists");
     }
 
-    //get roles from DB and check if rolesId exists
+    const [rolesResult]: any = await pool.execute(`SELECT idroles FROM roles`);
+    const dbRolesId = rolesResult.map((role: any) => role.idroles);
 
-    const roles: any = await pool.execute(
-      `SELECT id FROM roles WHERE id IN (${rolesId.join(",")})`
-    );
+    const rolesExists = rolesId.every((id: number) => dbRolesId.includes(id));
 
-    if (roles[0].length !== rolesId.length) {
-      return res.status(400).send("Invalid role");
+    if (!rolesExists) {
+      return res.status(400).send("Invalid role id");
     }
 
     const hashedPassword = await bcrypt.hash(
@@ -36,15 +36,22 @@ export const createUser = async (req: Request, res: Response) => {
     );
 
     const [userId]: any = await pool.execute(
-      `SELECT id FROM users WHERE email = '${email}'`
+      `SELECT idusers FROM users WHERE email = '${email}'`
     );
 
-    rolesId.forEach(async (roleId: string) => {
-      await pool.execute(
-        `INSERT INTO user_roles (userId, roleId) VALUES (${userId[0].id}, ${roleId})`
-      );
-    });
+    const insertRolesQuery = rolesId
+      .map((id: number) => `(${userId[0].idusers}, ${id})`)
+      .join(", ");
+    await pool.execute(
+      `INSERT INTO user_roles (users_idusers, roles_idroles) VALUES ${insertRolesQuery}`
+    );
 
     return res.status(201).send("User created successfully");
-  } catch (error) {}
+  } catch (error) {
+    console.error({
+      controller: "createUser",
+      error,
+    });
+    return res.status(500).send("Internal server error");
+  }
 };

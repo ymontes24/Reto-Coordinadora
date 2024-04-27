@@ -18,11 +18,11 @@ export const changeUserPassword = async (req: Request, res: Response) => {
       return res.status(404).send("User not found");
     }
 
-    // const passwordMatch = await bcrypt.compare(oldPassword, result[0].password);
+    const passwordMatch = await bcrypt.compare(oldPassword, result[0].password);
 
-    // if (!passwordMatch) {
-    //   return res.status(401).send("Invalid password");
-    // }
+    if (!passwordMatch) {
+      return res.status(401).send("Invalid password");
+    }
 
     const hashedPassword = await bcrypt.hash(newPassword, 10);
 
@@ -32,7 +32,10 @@ export const changeUserPassword = async (req: Request, res: Response) => {
 
     return res.status(200).send("Password changed successfully");
   } catch (error) {
-    console.error(error);
+    console.error({
+      controller: "changeUserPassword",
+      error,
+    });
     return res.status(500).send("Internal server error");
   }
 };

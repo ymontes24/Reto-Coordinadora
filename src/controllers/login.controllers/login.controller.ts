@@ -31,19 +31,19 @@ export const loginUser = async (req: Request, res: Response) => {
       roles: result[0].roles.split(","),
     };
 
-    // const passwordMatch = await bcrypt.compare(
-    //   userlogin.password,
-    //   userLogged.password
-    // );
+    const passwordMatch = await bcrypt.compare(
+      userlogin.password,
+      userLogged.password
+    );
 
-    // if (!passwordMatch) {
-    //   return res.status(401).send("Invalid email or password");
-    // }
+    if (!passwordMatch) {
+      return res.status(401).send("Invalid email or password");
+    }
 
     const { password, ...user } = userLogged;
 
     const token = jwt.sign(user, environment.JWT_SECRET as string, {
-      expiresIn: "1h",
+      expiresIn: "8h",
     });
 
     return res.status(200).send({
@@ -51,7 +51,10 @@ export const loginUser = async (req: Request, res: Response) => {
       user_email: userLogged.email,
     });
   } catch (error) {
-    console.error(error);
+    console.error({
+      controller: "loginUser",
+      error,
+    });
     return res.status(500).send("Internal server error");
   }
 };
