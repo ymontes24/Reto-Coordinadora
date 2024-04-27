@@ -1,0 +1,8 @@
+export const environment = {
+  DATABASE_SCHEMA: "reto_coordinadora",
+  DATABASE_USER: "root",
+  DATABASE_PASSWORD: "root",
+  DATABASE_HOST: "127.0.0.1",
+  DATABASE_PORT: 3306,
+  JWT_SECRET: "9C1E7EACA17C7AFCDD7C2C294D1A5",
+};

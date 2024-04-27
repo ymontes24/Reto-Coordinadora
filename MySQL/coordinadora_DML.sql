@@ -42,6 +42,26 @@ VALUES (
         UUID(), @role_uid, @user_uid, NOW(), NOW(), NULL
     );
 
+-- Obtener el UID del rol recién creado
+SET @role_admin_uid = UUID();
+
+-- Crear el rol super admin con UID autogenerado
+INSERT INTO
+    `reto_coordinadora`.`roles` (
+        `idroles`, `roleName`, `created_at`, `updated_at`, `deleted_at`
+    )
+VALUES (
+        @role_admin_uid, 'admin', NOW(), NOW(), NULL
+    );
+
+INSERT INTO
+    `reto_coordinadora`.`user_roles` (
+        `iduser_roles`, `roles_idroles`, `users_idusers`, `created_at`, `updated_at`, `deleted_at`
+    )
+VALUES (
+        UUID(), @role_admin_uid, @user_uid, NOW(), NOW(), NULL
+    );
+
 -- Restaurar modo de SQL
 SET SQL_MODE = @OLD_SQL_MODE;
 

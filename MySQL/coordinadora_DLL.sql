@@ -68,3 +68,11 @@ SET SQL_MODE = @OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS = @OLD_FOREIGN_KEY_CHECKS;
 
 SET UNIQUE_CHECKS = @OLD_UNIQUE_CHECKS;
+
+SET
+    GLOBAL sql_mode = (
+        SELECT
+        REPLACE (
+                @@sql_mode, 'ONLY_FULL_GROUP_BY', ''
+            )
+    );
