@@ -31,14 +31,14 @@ export const loginUser = async (req: Request, res: Response) => {
       roles: result[0].roles.split(","),
     };
 
-    const passwordMatch = await bcrypt.compare(
-      userlogin.password,
-      userLogged.password
-    );
+    // const passwordMatch = await bcrypt.compare(
+    //   userlogin.password,
+    //   userLogged.password
+    // );
 
-    if (!passwordMatch) {
-      return res.status(401).send("Invalid email or password");
-    }
+    // if (!passwordMatch) {
+    //   return res.status(401).send("Invalid email or password");
+    // }
 
     const { password, ...user } = userLogged;
 

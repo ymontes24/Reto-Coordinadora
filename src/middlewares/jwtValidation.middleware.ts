@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import { Request, Response, NextFunction } from "express";
 import { environment } from "../DB/config/environmets";
-import { User } from "../types/user.types";
+import { JwtUser } from "../types/user.types";
 
 export const jwtValidation = (
   req: Request,
@@ -18,7 +18,7 @@ export const jwtValidation = (
     const decoded = jwt.verify(
       token.split(" ")[1],
       environment.JWT_SECRET as string
-    ) as User;
+    ) as JwtUser;
     req.body.user = decoded;
     next();
   } catch (error) {
