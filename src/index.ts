@@ -8,7 +8,6 @@ import { jwtValidation } from "./middlewares/jwtValidation.middleware";
 const app = express();
 const port = environment.PORT || 3000;
 
-app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use("/", login.loginRoutes);

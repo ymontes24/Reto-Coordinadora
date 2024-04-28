@@ -1,4 +1,5 @@
 import { createEvent } from "./createEvent.controller";
+import { createEventsFromFile } from "./createEventsFromFile.controller";
 import { editEvent } from "./editEvent.controller";
 import { editEventStatus } from "./editEventStatus.controller";
 import { getAllEventStatues } from "./getAllEventStatues.controller";
@@ -12,4 +13,5 @@ export {
   getAllEventStatues,
   editEventStatus,
   getEvent,
+  createEventsFromFile,
 };

@@ -2,6 +2,9 @@ import { environment } from "../DB/config/environmets";
 
 export const getGeoLocation = async (address: string) => {
   try {
+    if (!address) {
+      return [null, null];
+    }
     const geocodeURL = `${environment.MAPBOX_URL_GEOCODIGN}${encodeURIComponent(
       address
     )}.json?access_token=${environment.MAPBOX_TOKEN}`;
