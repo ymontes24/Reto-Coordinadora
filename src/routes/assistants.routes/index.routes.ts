@@ -24,3 +24,8 @@ router.delete(
   userValidation,
   AssitantsController.deleteAssistantToEvent
 );
+router.get(
+  "/assistant/count",
+  adminValidation,
+  AssitantsController.getAssistantsToEventCount
+);

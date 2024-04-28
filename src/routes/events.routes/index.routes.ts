@@ -32,3 +32,9 @@ router.put(
   adminValidation,
   createEventController.editEventStatus
 );
+router.get(
+  "/event/assist",
+  userValidation,
+  createEventController.getEventToAssist
+);
+router.get("/events", adminValidation, createEventController.getEvents);
