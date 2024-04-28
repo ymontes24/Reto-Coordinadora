@@ -10,8 +10,16 @@ const router = express.Router();
 export const eventRoutes = router;
 
 router.post("/event", createEventController.createEvent);
+router.get("/event", adminValidation, createEventController.getEvent);
 router.get(
   "/event/nearby",
   userValidation,
   createEventController.getEventNearbyPlaces
+);
+router.put("/event", adminValidation, createEventController.editEvent);
+router.get("/event/status", createEventController.getAllEventStatues);
+router.put(
+  "/event/status",
+  adminValidation,
+  createEventController.editEventStatus
 );

@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import Joi from "joi";
 import pool from "../../DB/db_connection";
 import { event } from "../../types/event.types";
-import { environment } from "../../DB/config/environmets";
+import { getGeoLocation } from "../../utils/mapbox.util";
 import { JwtUser } from "../../types/user.types";
 
 const schema = Joi.object({
@@ -56,22 +56,5 @@ export const createEvent = async (req: Request, res: Response) => {
       stack: error,
     });
     return res.status(500).json("Server Error");
-  }
-};
-
-const getGeoLocation = async (address: string) => {
-  try {
-    const geocodeURL = `${environment.MAPBOX_URL_GEOCODIGN}${encodeURIComponent(
-      address
-    )}.json?access_token=${environment.MAPBOX_TOKEN}`;
-    const response = await fetch(geocodeURL);
-    const data = await response.json();
-    return data.features[0].geometry.coordinates;
-  } catch (error) {
-    console.error({
-      controller: "createEvent.getGeoLocation",
-      stack: error,
-    });
-    return null;
   }
 };

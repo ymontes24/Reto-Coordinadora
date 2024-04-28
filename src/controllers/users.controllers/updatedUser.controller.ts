@@ -16,8 +16,11 @@ export const updateUser = async (req: Request, res: Response) => {
     }
 
     await pool.execute(
-      `UPDATE users SET name = ?, lastName = ? WHERE idusers = ?`,
-      [user.name, user.lastName, result[0].idusers]
+      `UPDATE users SET
+        name = IFNULL(?, name),
+        lastName = IFNULL(?, lastName)
+       WHERE idusers = ?`,
+      [user.name || null, user.lastName || null, result[0].idusers]
     );
 
     return res.status(200).send("User updated successfully");

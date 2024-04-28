@@ -11,3 +11,8 @@ export type nearbyEvent = {
   idevents: number;
   distance: number;
 };
+
+export type eventStatus = {
+  idevents: number;
+  status: number;
+};

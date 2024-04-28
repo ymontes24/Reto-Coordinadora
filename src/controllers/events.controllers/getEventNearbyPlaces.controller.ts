@@ -1,9 +1,7 @@
 import { Request, Response } from "express";
 import Joi from "joi";
 import pool from "../../DB/db_connection";
-import { nearbyEvent } from "../../types/event.types";
-import { environment } from "../../DB/config/environmets";
-import { JwtUser } from "../../types/user.types";
+import { getNearbyPlaces } from "../../utils/mapbox.util";
 
 const schema = Joi.object({
   idevents: Joi.number().required(),
@@ -39,30 +37,5 @@ export const getEventNearbyPlaces = async (req: Request, res: Response) => {
       stack: error,
     });
     return res.status(500).json("Server Error");
-  }
-};
-
-const getNearbyPlaces = async (lat: number, long: number, distance: number) => {
-  try {
-    const tilequeryURL = `${environment.MAPBOX_URL_TILEQUERY}${long},${lat}.json?radius=${distance}&access_token=${environment.MAPBOX_TOKEN}`;
-
-    const response = await fetch(tilequeryURL);
-    const data = await response.json();
-    return data.features.map(
-      (feature: {
-        properties: { name: any; type: any };
-        geometry: { coordinates: any };
-      }) => ({
-        name: feature.properties.name,
-        type: feature.properties.type,
-        coordinates: feature.geometry.coordinates,
-      })
-    );
-  } catch (error) {
-    console.error({
-      controller: "getEventNearbyPlaces.getNearbyPlaces",
-      stack: error,
-    });
-    return [];
   }
 };
