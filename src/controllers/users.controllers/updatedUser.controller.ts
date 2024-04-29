@@ -12,6 +12,11 @@ const schema = Joi.object({
 });
 
 export const updateUser = async (req: Request, res: Response) => {
+  const { error } = schema.validate(req.body);
+  if (error) {
+    return res.status(400).send(error.details[0].message);
+  }
+
   const { id, rolesId, ...user } = req.body as User;
 
   try {

@@ -53,7 +53,7 @@ export const editEvent = async (req: Request, res: Response) => {
       ]
     );
 
-    return res.status(201).json("Event updated successfully");
+    return res.status(200).json("Event updated successfully");
   } catch (error) {
     console.error({
       controller: "editEvent",

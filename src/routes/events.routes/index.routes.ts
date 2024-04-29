@@ -12,7 +12,7 @@ export const eventRoutes = router;
 
 const storage = multer();
 
-router.post("/event", createEventController.createEvent);
+router.post("/event", adminValidation, createEventController.createEvent);
 router.post(
   "/event/upload",
   adminValidation,

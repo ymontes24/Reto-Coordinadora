@@ -42,7 +42,7 @@ export const editEventStatus = async (req: Request, res: Response) => {
       [status, idevents]
     );
 
-    return res.status(201).json("Event status updated successfully");
+    return res.status(200).json("Event status updated successfully");
   } catch (error) {
     console.error({
       controller: "editEventStatus",

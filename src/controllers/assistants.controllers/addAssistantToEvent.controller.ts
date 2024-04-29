@@ -57,8 +57,8 @@ export const addAssistantToEvent = async (req: Request, res: Response) => {
       return res.status(400).json("Invalid event");
     }
 
-    const maxCapacity = eventExists.max_capacity;
-    const assistants = eventExists.assistants;
+    const maxCapacity = eventExists[0].max_capacity;
+    const assistants = eventExists[0].assistants;
 
     if (assistants >= maxCapacity) {
       return res.status(400).json("Event is full");

@@ -30,7 +30,19 @@ export const createEventsFromFile = async (req: Request, res: Response) => {
 
     const file = req.files as Express.Multer.File[];
 
-    const events = await xlsToJson(file[0].buffer);
+    let events: {
+      title: any;
+      description: any;
+      address: any;
+      event_date: Date;
+      max_capacity: any;
+    }[];
+
+    try {
+      events = await xlsToJson(file[0].buffer);
+    } catch (error) {
+      return res.status(400).json("Invalid file format");
+    }
 
     const eventsToInsert = events.map((event) => {
       return {
