@@ -26,7 +26,11 @@ router.get(
   createEventController.getEventNearbyPlaces
 );
 router.put("/event", adminValidation, createEventController.editEvent);
-router.get("/event/status", createEventController.getAllEventStatues);
+router.get(
+  "/event/status",
+  adminValidation,
+  createEventController.getAllEventStatues
+);
 router.put(
   "/event/status",
   adminValidation,
