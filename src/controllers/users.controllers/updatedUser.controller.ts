@@ -1,6 +1,15 @@
 import { Request, Response } from "express";
 import pool from "../../DB/db_connection";
 import { User } from "../../types/user.types";
+import Joi from "joi";
+import { JwtUser } from "../../types/user.types";
+
+const schema = Joi.object({
+  email: Joi.string().email().required(),
+  name: Joi.string(),
+  lastName: Joi.string(),
+  user: Joi.object<JwtUser>().required(),
+});
 
 export const updateUser = async (req: Request, res: Response) => {
   const { id, rolesId, ...user } = req.body as User;

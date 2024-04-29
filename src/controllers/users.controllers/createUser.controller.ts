@@ -3,8 +3,22 @@ import bcrypt from "bcrypt";
 import pool from "../../DB/db_connection";
 import { User } from "../../types/user.types";
 import { environment } from "../../DB/config/environmets";
+import Joi from "joi";
+import { JwtUser } from "../../types/user.types";
+
+const schema = Joi.object({
+  name: Joi.string().required(),
+  lastName: Joi.string().required(),
+  email: Joi.string().email().required(),
+  rolesId: Joi.array().items(Joi.number()).required(),
+  user: Joi.object<JwtUser>().required(),
+});
 
 export const createUser = async (req: Request, res: Response) => {
+  const { error } = schema.validate(req.body);
+  if (error) {
+    return res.status(400).send(error.details[0].message);
+  }
   const { name, lastName, email, rolesId } = req.body as User;
 
   try {

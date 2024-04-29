@@ -4,9 +4,19 @@ import bcrypt from "bcrypt";
 import { LoginUser, UserLogged } from "../../types/login.types";
 import pool from "../../DB/db_connection";
 import { environment } from "../../DB/config/environmets";
+import Joi from "joi";
+
+const schema = Joi.object({
+  email: Joi.string().email().required(),
+  password: Joi.string().min(4).required(),
+});
 
 export const loginUser = async (req: Request, res: Response) => {
   try {
+    const { error } = schema.validate(req.body);
+    if (error) {
+      return res.status(400).send(error.details[0].message);
+    }
     const userlogin: LoginUser = req.body;
     const [result]: any = await pool.execute(
       `SELECT 

@@ -1,8 +1,21 @@
 import { Request, Response } from "express";
 import bcrypt from "bcrypt";
 import pool from "../../DB/db_connection";
+import Joi from "joi";
+import { JwtUser } from "../../types/user.types";
+
+const schema = Joi.object({
+  oldPassword: Joi.string().required(),
+  newPassword: Joi.string().min(4).alphanum().required(),
+  user: Joi.object<JwtUser>().required(),
+});
 
 export const changeUserPassword = async (req: Request, res: Response) => {
+  const { error } = schema.validate(req.body);
+  if (error) {
+    return res.status(400).send(error.details[0].message);
+  }
+
   const {
     oldPassword,
     newPassword,

@@ -1,8 +1,21 @@
 import { Request, Response } from "express";
 import pool from "../../DB/db_connection";
+import Joi from "joi";
+import { JwtUser } from "../../types/user.types";
 import { UserRoles } from "../../types/user.types";
 
+const schema = Joi.object({
+  email: Joi.string().email().required(),
+  rolesId: Joi.array().items(Joi.number()).required(),
+  user: Joi.object<JwtUser>().required(),
+});
+
 export const addUserRoles = async (req: Request, res: Response) => {
+  const { error } = schema.validate(req.body);
+  if (error) {
+    return res.status(400).send(error.details[0].message);
+  }
+
   const { email, rolesId } = req.body as UserRoles;
 
   try {

@@ -1,7 +1,16 @@
 import { Request, Response } from "express";
 import pool from "../../DB/db_connection";
+import Joi from "joi";
+
+const schema = Joi.object({
+  email: Joi.string().email().required(),
+});
 
 export const deleteUser = async (req: Request, res: Response) => {
+  const { error } = schema.validate(req.query);
+  if (error) {
+    return res.status(400).send(error.details[0].message);
+  }
   const { email } = req.query;
 
   try {
